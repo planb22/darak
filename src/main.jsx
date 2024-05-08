@@ -6,7 +6,7 @@ import { theme } from './theme/index';
 import { App } from './App';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode> 
+  <React.StrictMode>
     <ColorModeScript initialColorMode={theme.config?.initialColorMode} />
     <App />
   </React.StrictMode>

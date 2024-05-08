@@ -16,5 +16,8 @@ export const theme = extendTheme({
     // Button: {
     // }
   },
+  colors: {
+    white: '#fcfcfc'
+  },
   config,
 });
