@@ -11,10 +11,6 @@ import {
 } from "./domain/constants/paths";
 import { LoginPage } from "./pages/login";
 
-import { Heading } from "@chakra-ui/react";
-
-
-
 export const router = createBrowserRouter([
     {
         path: BASE_PATH,

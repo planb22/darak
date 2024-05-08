@@ -1,24 +1,17 @@
 import React from "react";
 import { ReactElement } from "react";
 
-import { Button } from "@chakra-ui/react";
-import { useColorMode } from "@chakra-ui/react";
+import { IconButton, useColorMode } from "@chakra-ui/react";
+import { RiMoonFill, RiSunLine } from 'react-icons/ri';
 
 export const LoginPage = (): ReactElement => {
-    function Example() {
-        const { colorMode, toggleColorMode } = useColorMode()
-        return (
-          <header>
-            <Button onClick={toggleColorMode}>
-              Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
-            </Button>
-          </header>
-        )
-      }
-
+    const { colorMode, toggleColorMode } = useColorMode();
+    
     return (
-        <div>
-            {Example()}
-        </div>
-    )
-}
+      <IconButton
+        aria-label="theme toggle"
+        icon={colorMode === 'light' ? <RiMoonFill /> : <RiSunLine />}
+        onClick={toggleColorMode}
+      />
+    );
+};
