@@ -10,11 +10,16 @@ import {
     PREF_PATH
 } from "./domain/constants/paths";
 
+import { Heading } from "@chakra-ui/react";
+
 export const router = createBrowserRouter([
     {
         path: BASE_PATH,
         element: (
             <div>
+                <Heading>
+                    Chakra UI Test!
+                </Heading>
                 Hello World! This is Vite + React!
             </div>
         ),
