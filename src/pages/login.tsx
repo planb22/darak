@@ -78,6 +78,7 @@ export const LoginPage = (): ReactElement => {
           size='lg'
           type='email'
           placeholder='이메일'
+          variant='filled'
           mb='10px'
         />
         <InputGroup size='lg' mb='30px'>
@@ -85,11 +86,13 @@ export const LoginPage = (): ReactElement => {
             pr='4.5rem'
             size='lg'
             type={show ? 'text' : 'password'}
+            variant='filled'
             placeholder='비밀번호'
           />
           <InputRightElement width='4.5rem'>
             <IconButton
               aria-label="show or hide password"
+              variant='outline'
               icon={show ? <BiSolidHide /> : <BiSolidShow />}
               onClick={handleClick}
             />
@@ -99,11 +102,22 @@ export const LoginPage = (): ReactElement => {
           <Button
             fontFamily='LINESeedKR-Bd'
             width='100%'
-            mb='30px'
+            mb='20px'
           >
             로그인
           </Button>
         </Center>
+        <Flex mb='30px'>
+          <Spacer />
+          <Button colorScheme="gray" variant='link'>
+            회원가입
+          </Button>
+          <Text mx='10px'>·</Text>
+          <Button colorScheme="gray" variant='link'>
+            비밀번호를 잊으셨나요?
+          </Button>
+          <Spacer />
+        </Flex>
         <Box position='relative' mb='30px'>
           <Divider />
           <AbsoluteCenter
