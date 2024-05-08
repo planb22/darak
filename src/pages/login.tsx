@@ -1,6 +1,8 @@
 import React from "react";
 import { ReactElement, useState } from "react";
 
+import axios from 'axios';
+
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
@@ -33,7 +35,7 @@ export const LoginPage = (): ReactElement => {
       appId: import.meta.env.VITE_APP_ID
     };
     
-    const loginRequest = () => {
+    const loginRequestGoogle = () => {
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const provider = new GoogleAuthProvider();
@@ -58,6 +60,21 @@ export const LoginPage = (): ReactElement => {
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
+      });
+    }
+
+    const loginRequest = () => {
+      axios.post("http://" + import.meta.env.VITE_BASE_URL + "/login", {
+          username: "test",
+          password: "1234"
+        }, {
+          headers: {
+              
+          }
+      }).then((result) => {
+        console.log(result);
+      }).catch((error) => {
+        console.error(error);
       });
     }
     
@@ -103,6 +120,7 @@ export const LoginPage = (): ReactElement => {
             fontFamily='LINESeedKR-Bd'
             width='100%'
             mb='20px'
+            onClick={loginRequest}
           >
             로그인
           </Button>
@@ -131,7 +149,7 @@ export const LoginPage = (): ReactElement => {
           <IconButton
             aria-label="social login"
             icon={<FcGoogle />}
-            onClick={loginRequest}
+            onClick={loginRequestGoogle}
           />
         </Center>
       </>
