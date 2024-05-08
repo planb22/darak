@@ -5,11 +5,11 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { Heading, Text, 
-  Button, ButtonGroup, IconButton, 
+  Button, ButtonGroup, IconButton, Image,
   Box, Divider, AbsoluteCenter,
   Input, InputGroup, InputRightElement,
   useColorMode, useToast, useTheme,
-  HStack, VStack
+  Flex, Spacer, HStack, VStack, Center
 } from "@chakra-ui/react";
 
 import { RiMoonFill, RiSunLine } from 'react-icons/ri';
@@ -63,37 +63,24 @@ export const LoginPage = (): ReactElement => {
     
     return (
       <>
-        <Heading>LINE Seed Sans가 적용되었어요!</Heading>
-        <Text fontSize='lg'>LINE Seed Sans가 적용되었어요. 여기에 텍스트를 입력하세요.</Text>
-        <IconButton
-          aria-label="theme toggle"
-          icon={colorMode === 'light' ? <RiMoonFill /> : <RiSunLine />}
-          onClick={toggleColorMode}
-        />
-        <br/>
-        <Button
-          onClick={() =>
-            toast({
-              title: 'Account created.',
-              description: "계정 생성이 완료되었습니다.",
-              status: 'success',
-              duration: 1500,
-              isClosable: true,
-            })
-          }
-        >
-          토스트 보기
-        </Button>
-
-        <br/>
+        <Flex>
+          <Image src='/book.png' boxSize='100px' mb='1.5rem' />
+          <Spacer />
+          <IconButton
+            aria-label="theme toggle"
+            icon={colorMode === 'light' ? <RiMoonFill /> : <RiSunLine />}
+            onClick={toggleColorMode}
+          />
+        </Flex>
+        <Heading>인생 책을 찾을 준비 되셨나요?</Heading>
+        <Text fontSize='lg' mb='3rem'>지금 로그인하고 5분 안에 동네 친구에게 당신의 책을 소개하세요.</Text>
         <Input
-          pr='4.5rem'
           size='lg'
           type='email'
           placeholder='이메일'
+          mb='10px'
         />
-
-        <InputGroup size='lg'>
+        <InputGroup size='lg' mb='30px'>
           <Input
             pr='4.5rem'
             size='lg'
@@ -108,18 +95,16 @@ export const LoginPage = (): ReactElement => {
             />
           </InputRightElement>
         </InputGroup>
-        <br/>
-
-        <Button
-          fontFamily='LINESeedKR-Bd'
-          width='50%'
-          onClick={loginRequest}
-        >
-          로그인
-        </Button>
-        <br/>
-
-        <Box position='relative' padding='3'>
+        <Center>
+          <Button
+            fontFamily='LINESeedKR-Bd'
+            width='100%'
+            mb='30px'
+          >
+            로그인
+          </Button>
+        </Center>
+        <Box position='relative' mb='30px'>
           <Divider />
           <AbsoluteCenter
             bg={theme.__cssMap['colors.chakra-body-bg'].value}
@@ -128,13 +113,13 @@ export const LoginPage = (): ReactElement => {
             또는
           </AbsoluteCenter>
         </Box>
-
-        <IconButton
-          aria-label="social login"
-          icon={<FcGoogle />}
-        />
-
-
+        <Center>
+          <IconButton
+            aria-label="social login"
+            icon={<FcGoogle />}
+            onClick={loginRequest}
+          />
+        </Center>
       </>
     );
 };
