@@ -109,7 +109,7 @@ export const LoginPage = (): ReactElement => {
         </Center>
         <Flex mb='30px'>
           <Spacer />
-          <Button colorScheme="gray" variant='link'>
+          <Button colorScheme="blue" variant='link'>
             회원가입
           </Button>
           <Text mx='10px'>·</Text>
