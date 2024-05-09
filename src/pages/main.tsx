@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactElement, useState } from "react";
 
-import { Avatar, Heading, Button, Card, Center, 
+import { Avatar, Heading, Button, Box, Card, Center, 
   Image, Text, Flex, Spacer, Wrap, WrapItem, Grid, GridItem,
   IconButton, useColorMode } from "@chakra-ui/react";
 import { RiMoonFill, RiSunLine } from 'react-icons/ri';
@@ -25,7 +25,7 @@ export const MainPage = (): ReactElement => {
       </Flex>
       <Card minW='100%' padding='1.3rem' mb='1.5rem'>
         <Heading size='lg'>
-          꽁꽁 얼어붙은 한강 위로 고양이가 걸어다닙니다
+          동네 친구와 숨은 책을 공유하고<br/>5,000원 지원금 받으세요
         </Heading>
         <Center py='2.5rem'>
           <Image src='/sleeping-book.png' boxSize='36%' />
@@ -36,10 +36,10 @@ export const MainPage = (): ReactElement => {
           width='100%'
           size='lg'
         >
-          CTA 버튼 텍스트
+          보러 가기
         </Button>
       </Card>
-      <Flex alignItems='center' mb='1rem'>
+      <Flex alignItems='center' mb='1rem' >
         <Heading as='h2' size='lg'>
           장르별 보기
         </Heading>
@@ -51,7 +51,7 @@ export const MainPage = (): ReactElement => {
           모두 보기
         </Button>
       </Flex>
-      <Grid templateColumns='repeat(3, 1fr)' gap={3} mb='1rem'>
+      <Grid templateColumns='repeat(3, 1fr)' gap={3} mb='2rem'>
         <GridItem>
           <Card alignItems='center' py='1.5rem' onClick={()=>{navigate(-1)}}>
             <Image src='/flask.png' boxSize='60%' mb='1rem' />
@@ -73,15 +73,9 @@ export const MainPage = (): ReactElement => {
       </Grid>
       <Flex alignItems='center' mb='1rem'>
         <Heading as='h2' size='lg'>
-          오늘의 명대사
+          이야기 속 그 장면
         </Heading>
         <Spacer />
-        <Button
-          variant='outline'
-          size='sm'
-        >
-          모두 보기
-        </Button>
       </Flex>
       <Text fontFamily='RIDIBatang'>
       겨우 수하물 검사를 받는 데까지 왔는데 아저씨의 배낭이 걸렸다. 여성 검사관이 엄격한 눈빛으로 열어보라고 명령한다. 아저씨는 혀를 찼다.
@@ -90,9 +84,13 @@ export const MainPage = (): ReactElement => {
       <Text fontFamily='RIDIBatang' textShadow='0px 0px 10px white' color='transparent' mb='2rem'>
       <br/>중얼중얼 불평을 늘어놓는 아저씨에게 여성 검사관은 엄격한 얼굴 그대로 말했다. “칼입니다.”
       </Text>
-      <Center position='relative' top='-3rem' >
-        <Image src='/sample-book-cover.jpg' objectFit='contain' boxSize='25%' blur='6px' />
-      </Center>
+      <Box width='100%' position='relative' top='-3rem'>
+        <Box margin='0 0' filter='auto' blur='4px'>
+          <Center>
+            <Image src='/sample-book-cover.jpg' objectFit='contain' boxSize='25%' />
+          </Center>
+        </Box>
+      </Box>
       <Center>
         <Text fontFamily='LINESeedKR-Bd' align='center' >
           지금 나머지 내용을 만나보고 싶다면?<br/>근처에서 이 책을 교환할 수 있어요!
