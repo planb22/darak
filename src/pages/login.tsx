@@ -3,6 +3,8 @@ import { ReactElement, useState } from "react";
 
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
@@ -20,6 +22,7 @@ import { FcGoogle } from "react-icons/fc";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { getCookie, setCookie } from "../util/cookie";
 
 type Inputs = {
   username: string,
@@ -28,6 +31,8 @@ type Inputs = {
 
 export const LoginPage = (): ReactElement => {
   const { colorMode, toggleColorMode } = useColorMode();
+
+  const [wheel, setWheel] = useState(false);
   const toast = useToast();
   const theme = useTheme();
 
@@ -35,7 +40,35 @@ export const LoginPage = (): ReactElement => {
   const handleClick = () => setShow(!show);
 
   const { handleSubmit, register, formState: { isValid } } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setWheel(true);
+    await axios.post("http://" + import.meta.env.VITE_BASE_URL + "/signin", data, {
+      headers: {
+        "Content-Type": "application/json"
+      }, withCredentials: true
+    }).then((result) => { 
+      console.log(result.data._id)
+      setWheel(false);
+      toast({
+        title: '로그인에 성공했어요',
+        description: "",
+        status: 'success',
+        duration: 2000,
+        isClosable: false,
+      });
+      // navigate("/main");
+    }).catch((error) => {
+      console.error(error);
+      setWheel(false);
+      toast({
+        title: '로그인에 실패했어요',
+        description: "이메일 및 비밀번호를 정확히 입력했는지 확인해 주세요.",
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+    });
+  }
 
   const navigate = useNavigate();
 
@@ -76,21 +109,6 @@ export const LoginPage = (): ReactElement => {
     });
   }
 
-  const loginRequest = () => {
-    axios.post("http://" + import.meta.env.VITE_BASE_URL + "/login", {
-        username: "test",
-        password: "1234"
-      }, {
-        headers: {
-            
-        }
-    }).then((result) => {
-      console.log(result);
-    }).catch((error) => {
-      console.error(error);
-    });
-  }
-
   const goToSignUp = () => {
     navigate("/signup");
   };
@@ -115,6 +133,7 @@ export const LoginPage = (): ReactElement => {
           placeholder='이메일'
           variant='filled'
           mb='10px'
+          isDisabled={wheel}
           {...register("username", {required: true, minLength: 6})}
         />
         <InputGroup size='lg' mb='30px'>
@@ -124,6 +143,7 @@ export const LoginPage = (): ReactElement => {
             type={show ? 'text' : 'password'}
             variant='filled'
             placeholder='비밀번호'
+            isDisabled={wheel}
             {...register("password", {required: true, minLength: 6})}
           />
           <InputRightElement width='4.5rem'>
@@ -140,9 +160,9 @@ export const LoginPage = (): ReactElement => {
             fontFamily='LINESeedKR-Bd'
             width='100%'
             mb='20px'
-            onClick={loginRequest}
             type='submit'
             isDisabled={!isValid}
+            isLoading={wheel}
           >
             로그인
           </Button>

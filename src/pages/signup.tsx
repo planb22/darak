@@ -41,10 +41,23 @@ export const SignUpPage = (): ReactElement => {
       headers: {
         "Content-Type": "application/json"
       }
-    }).then((result) => {
+    }).then(async (result) => {
       // console.log(result);
-      setWheel(false);
-      navigate("/main");
+      // 같은 데이터로 signin 진행
+      await axios.post("http://" + import.meta.env.VITE_BASE_URL + "/signin", {
+        username: data.username,
+        password: data.password
+      }, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then((result) => {
+        setWheel(false);
+        console.log(result);
+      }).catch((error) => {
+
+      });
+      // navigate("/main");
     }).catch((error) => {
       // console.error(error);
       setWheel(false);

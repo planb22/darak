@@ -1,6 +1,8 @@
 import React from "react";
 import { ReactElement, useState } from "react";
 
+import axios from 'axios';
+
 import { useNavigate } from "react-router-dom";
 
 import { Avatar, Heading, Button, Box, Card, Center, 
@@ -16,6 +18,23 @@ export const MainPage = (): ReactElement => {
   const getTextShadowColor = (): string => {
     return '0px 0px 10px ' + (colorMode==='light'?'black':'white');
   };
+
+  function logOut(){
+
+    navigate("/login");
+  }
+
+  async function testFunc(){
+    await axios.get("http://" + import.meta.env.VITE_BASE_URL + "/giveme", {
+      headers: {
+        "Content-Type": "application/json"
+      }, withCredentials: true
+    }).then((result) => { 
+      console.log(result);
+    }).catch((error) => {
+      console.error(error);
+    });
+  }
 
   return (
     <>
@@ -116,6 +135,21 @@ export const MainPage = (): ReactElement => {
         </Text>
       </Center>
       
+      <Flex mt='4rem' mb='0.5rem'>
+        <Spacer />
+        <Button colorScheme="gray" variant='link' onClick={logOut}>
+          로그아웃
+        </Button>
+        <Text mx='10px'>·</Text>
+        <Button colorScheme="gray" variant='link' onClick={testFunc}>
+          GIVE ME
+        </Button>
+        <Spacer />
+      </Flex>
+
+      <Center mb='30px'>
+        <Text>powered by Plan Bee</Text>
+      </Center>
     </>
   )
 }

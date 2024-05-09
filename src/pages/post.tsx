@@ -58,7 +58,7 @@ export const PostPage = (): ReactElement => {
       setWheel(false);
       toast({
         title: '도서 확인에 실패했어요',
-        description: "알 수 없는 오류가 발생했어요. 고객센터에 문의해 주세요.",
+        description: "알 수 없는 오류가 발생했어요. PC에서 다시 시도하거나 고객센터에 문의해 주세요.",
         status: 'error',
         duration: 3500,
         isClosable: false,
@@ -142,6 +142,14 @@ export const PostPage = (): ReactElement => {
             onClick={()=>{setLevel(level-1)}}
           >
             무엇을 입력하는지 모르겠어요
+          </Button>
+          <Button
+            mt='1rem'
+            width='100%'
+            variant='outlined'
+            onClick={levelUp}
+          >
+            건너뛰기 (샘플 데이터)
           </Button>
         </>
       ) : null}
