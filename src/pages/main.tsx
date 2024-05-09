@@ -1,15 +1,21 @@
 import React from "react";
 import { ReactElement, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import { Avatar, Heading, Button, Box, Card, Center, 
-  Image, Text, Flex, Spacer, Wrap, WrapItem, Grid, GridItem,
+  Image, Text, Flex, Spacer, Wrap, WrapItem, Grid, GridItem, Icon,
   IconButton, useColorMode } from "@chakra-ui/react";
 import { RiMoonFill, RiSunLine } from 'react-icons/ri';
-import { useNavigate } from "react-router-dom";
+import { FaShuffle } from "react-icons/fa6";
 
 export const MainPage = (): ReactElement => {
   const { colorMode, toggleColorMode } = useColorMode();
   const navigate = useNavigate();
+
+  const getTextShadowColor = (): string => {
+    return '0px 0px 10px ' + (colorMode==='light'?'black':'white');
+  };
 
   return (
     <>
@@ -51,7 +57,7 @@ export const MainPage = (): ReactElement => {
           모두 보기
         </Button>
       </Flex>
-      <Grid templateColumns='repeat(3, 1fr)' gap={3} mb='2rem'>
+      <Grid templateColumns='repeat(3, 1fr)' gap={3} mb='0.8rem'>
         <GridItem>
           <Card alignItems='center' py='1.5rem' onClick={()=>{navigate(-1)}}>
             <Image src='/flask.png' boxSize='60%' mb='1rem' />
@@ -71,6 +77,18 @@ export const MainPage = (): ReactElement => {
           </Card>
         </GridItem>
       </Grid>
+      <Card
+        alignItems='center'
+        direction='row'
+        width='100%'
+        py='0.8rem'
+        mb='1.7rem'
+      >
+        <Spacer />
+        <Icon as={FaShuffle} mr='0.5rem' />
+        <Text fontFamily='LINESeedKR-Bd'>어떤 주제든 괜찮아요</Text>
+        <Spacer />
+      </Card>
       <Flex alignItems='center' mb='1rem'>
         <Heading as='h2' size='lg'>
           이야기 속 그 장면
@@ -81,13 +99,13 @@ export const MainPage = (): ReactElement => {
       겨우 수하물 검사를 받는 데까지 왔는데 아저씨의 배낭이 걸렸다. 여성 검사관이 엄격한 눈빛으로 열어보라고 명령한다. 아저씨는 혀를 찼다.
       <br/>“대단한 게 들어 있을 리 없어요. 이런 관계없는 것까지 일일이 검사하니까 입구가 혼잡하지.”
       </Text>
-      <Text fontFamily='RIDIBatang' textShadow='0px 0px 10px white' color='transparent' mb='2rem'>
+      <Text fontFamily='RIDIBatang' textShadow={getTextShadowColor()} color='transparent' mb='2rem'>
       <br/>중얼중얼 불평을 늘어놓는 아저씨에게 여성 검사관은 엄격한 얼굴 그대로 말했다. “칼입니다.”
       </Text>
       <Box width='100%' position='relative' top='-3rem'>
-        <Box margin='0 0' filter='auto' blur='4px'>
+        <Box filter='auto' blur='5px'>
           <Center>
-            <Image src='/sample-book-cover.jpg' objectFit='contain' boxSize='25%' />
+          <Image src='/sample-book-cover.jpg' objectFit='contain' width='25%' />
           </Center>
         </Box>
       </Box>

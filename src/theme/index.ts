@@ -17,7 +17,7 @@ export const theme = extendTheme({
     // }
   },
   colors: {
-    white: '#fcfcfc'
+    customWhite: '#F2F1F6'
   },
   config,
 });
