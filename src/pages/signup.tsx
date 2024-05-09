@@ -26,6 +26,12 @@ export const SignUpPage = (): ReactElement => {
   const [wheel, setWheel] = useState(false);
   const toast = useToast();
 
+  const navigate = useNavigate();
+  const goPrevPage = () => {
+    navigate("/login");
+    // navigate(-1);
+  }
+
   const [checkedTos, setCheckedTos] = useState(false);
 
   const { handleSubmit, register, formState: { isValid } } = useForm<Inputs>();
@@ -36,11 +42,11 @@ export const SignUpPage = (): ReactElement => {
         "Content-Type": "application/json"
       }
     }).then((result) => {
-      console.log(result);
+      // console.log(result);
       setWheel(false);
-      
+      navigate("/main");
     }).catch((error) => {
-      console.error(error);
+      // console.error(error);
       setWheel(false);
       toast({
         title: '회원가입에 실패했어요',
@@ -55,20 +61,18 @@ export const SignUpPage = (): ReactElement => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
-  const navigate = useNavigate();
-  const goPrevPage = () => {
-    navigate("/login");
-    // navigate(-1);
-  }
-
   return (
     <>
-      <Image src="/happy-face.png" boxSize='80px' mb='1.5rem' />
-      <Heading mb='1.5rem'>다락에 오신 것을 환영해요!</Heading>
+      <Image src={wheel ? "/rocket.png" : "/happy-face.png"} boxSize='80px' mb='1.5rem' />
+      <Heading mb='1.5rem'>{
+        wheel ? "거의 다 되었어요.." : "다락에 오신 것을 환영해요!"
+      }
+      </Heading>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           size='lg'
           type='string'
+          isDisabled={wheel}
           placeholder='이름'
           variant='filled'
           mb='10px'
@@ -77,6 +81,7 @@ export const SignUpPage = (): ReactElement => {
         <Input
           size='lg'
           type='string'
+          isDisabled={wheel}
           placeholder='별명'
           variant='filled'
           mb='10px'
@@ -85,12 +90,12 @@ export const SignUpPage = (): ReactElement => {
             message: "형식이 올바르지 않습니다."
           }})}
         />
-        <li><Text fontFamily='LINESeedKR-Bd'>별명은 다른 회원님에게도 보여요.</Text></li>
-        <Text>쉽게 읽을 수 있도록 한글로 4자 이상 7자 이하로 지정해 주세요.</Text>
+        <li>별명은 다른 회원님에게도 보여요.<br/>쉽게 읽을 수 있도록 한글로 4자 이상 7자 이하로 지정해 주세요.</li>
         <Input
           mt='1rem'
           size='lg'
           type='email'
+          isDisabled={wheel}
           placeholder='이메일'
           variant='filled'
           mb='10px'
@@ -104,6 +109,7 @@ export const SignUpPage = (): ReactElement => {
             pr='4.5rem'
             size='lg'
             type={show ? 'text' : 'password'}
+            isDisabled={wheel}
             variant='filled'
             placeholder='비밀번호'
             {...register("password", {required: true, minLength: 10})}
@@ -121,7 +127,8 @@ export const SignUpPage = (): ReactElement => {
         <Checkbox 
           colorScheme="teal"
           mt='1.5rem'
-          isChecked={checkedTos} 
+          isChecked={checkedTos}
+          isDisabled={wheel}
           onChange={(e) => setCheckedTos(e.target.checked)}
         >
           [필수] <Link href={import.meta.env.VITE_TOS_URL} textDecoration='underline' isExternal>다락 이용약관</Link><Icon as={LuExternalLink} />에 동의합니다.</Checkbox>
@@ -140,14 +147,19 @@ export const SignUpPage = (): ReactElement => {
           </Button>
         </Center>
       </form>
-      <Button
-        fontFamily='LINESeedKR-Bd'
-        colorScheme='gray'
-        width='100%'
-        onClick={goPrevPage}
-      >
-        뒤로
-      </Button>
+      {
+        !wheel ? (
+          <Button
+            fontFamily='LINESeedKR-Bd'
+            colorScheme='gray'
+            width='100%'
+            onClick={goPrevPage}
+          >
+            뒤로
+          </Button>
+        ) : (<></>)
+      }
+      
     </>
   );
 }
