@@ -4,6 +4,7 @@ import { ReactElement } from "react";
 import { Field, Form, Formik } from "formik";
 
 import { Heading, Image, Input, Center, FormControl, FormLabel, FormErrorMessage, Button } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 export const SignUpPage = (): ReactElement => {
   type Inputs = {
@@ -24,11 +25,16 @@ export const SignUpPage = (): ReactElement => {
     return error
   }
 
+  const navigate = useNavigate();
+  const goPrevPage = () => {
+    navigate(-1);
+  }
+
   return (
     <>
       <Image src={tname != "" ? "/happy-face.png" : "/smiling-face.png"} boxSize='80px' mb='1.5rem' />
       <Heading mb='1.5rem'>{
-        tname != "" ? (tname + "님, 우린 운명인가봐요!")
+        tname.length >= 2 ? "조금만 더 입력하면 끝나요!"
         : "다락에 오신 것을 환영해요!"
       }</Heading>
 
@@ -70,6 +76,7 @@ export const SignUpPage = (): ReactElement => {
                 width='100%'
                 isLoading={props.isSubmitting}
                 type='submit'
+                mb='0.8rem'
               >
                 완료
               </Button>
@@ -78,6 +85,14 @@ export const SignUpPage = (): ReactElement => {
           </Form>
         )}
       </Formik>
+      <Button
+      fontFamily='LINESeedKR-Bd'
+        colorScheme='gray'
+        width='100%'
+        onClick={goPrevPage}
+      >
+        뒤로
+      </Button>
     </>
   )
 }
