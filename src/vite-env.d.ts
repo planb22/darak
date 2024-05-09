@@ -9,4 +9,7 @@ interface ImportMetaEnv {
     readonly VITE_APP_ID: string;
     readonly VITE_BASE_URL: string;
     readonly VITE_TOS_URL: string;
+    readonly VITE_BOOK_API_URL: string;
+    readonly VITE_BOOK_API_KEY: string;
+    readonly VITE_USER_AGENT: string;
 }
