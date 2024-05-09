@@ -1,11 +1,15 @@
 import React from "react";
 import { ReactElement, useState } from "react";
 
-import { Avatar, Heading, Button, Card, Center, Image, Flex, Spacer, IconButton, useColorMode } from "@chakra-ui/react";
+import { Avatar, Heading, Button, Card, Center, 
+  Image, Text, Flex, Spacer, Wrap, WrapItem, Grid, GridItem,
+  IconButton, useColorMode } from "@chakra-ui/react";
 import { RiMoonFill, RiSunLine } from 'react-icons/ri';
+import { useNavigate } from "react-router-dom";
 
 export const MainPage = (): ReactElement => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -23,8 +27,8 @@ export const MainPage = (): ReactElement => {
         <Heading size='lg'>
           꽁꽁 얼어붙은 한강 위로 고양이가 걸어다닙니다
         </Heading>
-        <Center py='3rem'>
-          <Image src='/sleeping-book.png' boxSize='42%' />
+        <Center py='2.5rem'>
+          <Image src='/sleeping-book.png' boxSize='36%' />
         </Center>
         <Button
           colorScheme='teal'
@@ -35,7 +39,7 @@ export const MainPage = (): ReactElement => {
           CTA 버튼 텍스트
         </Button>
       </Card>
-      <Flex alignItems='center'>
+      <Flex alignItems='center' mb='1rem'>
         <Heading as='h2' size='lg'>
           장르별 보기
         </Heading>
@@ -47,6 +51,54 @@ export const MainPage = (): ReactElement => {
           모두 보기
         </Button>
       </Flex>
+      <Grid templateColumns='repeat(3, 1fr)' gap={3} mb='1rem'>
+        <GridItem>
+          <Card alignItems='center' py='1.5rem' onClick={()=>{navigate(-1)}}>
+            <Image src='/flask.png' boxSize='60%' mb='1rem' />
+            <Text fontFamily='LINESeedKR-Bd' fontSize='lg'>과학</Text>
+          </Card>
+        </GridItem>
+        <GridItem>
+          <Card alignItems='center' py='1.5rem'>
+            <Image src='/mask.png' boxSize='60%' mb='1rem' />
+            <Text fontFamily='LINESeedKR-Bd' fontSize='lg'>장편소설</Text>
+          </Card>
+        </GridItem>
+        <GridItem>
+          <Card alignItems='center' py='1.5rem'>
+            <Image src='/comic.png' boxSize='60%' mb='1rem' />
+            <Text fontFamily='LINESeedKR-Bd' fontSize='lg'>만화·라노벨</Text>
+          </Card>
+        </GridItem>
+      </Grid>
+      <Flex alignItems='center' mb='1rem'>
+        <Heading as='h2' size='lg'>
+          오늘의 명대사
+        </Heading>
+        <Spacer />
+        <Button
+          variant='outline'
+          size='sm'
+        >
+          모두 보기
+        </Button>
+      </Flex>
+      <Text fontFamily='RIDIBatang'>
+      겨우 수하물 검사를 받는 데까지 왔는데 아저씨의 배낭이 걸렸다. 여성 검사관이 엄격한 눈빛으로 열어보라고 명령한다. 아저씨는 혀를 찼다.
+      <br/>“대단한 게 들어 있을 리 없어요. 이런 관계없는 것까지 일일이 검사하니까 입구가 혼잡하지.”
+      </Text>
+      <Text fontFamily='RIDIBatang' textShadow='0px 0px 10px white' color='transparent' mb='2rem'>
+      <br/>중얼중얼 불평을 늘어놓는 아저씨에게 여성 검사관은 엄격한 얼굴 그대로 말했다. “칼입니다.”
+      </Text>
+      <Center position='relative' top='-3rem' >
+        <Image src='/sample-book-cover.jpg' objectFit='contain' boxSize='25%' blur='6px' />
+      </Center>
+      <Center>
+        <Text fontFamily='LINESeedKR-Bd' align='center' >
+          지금 나머지 내용을 만나보고 싶다면?<br/>근처에서 이 책을 교환할 수 있어요!
+        </Text>
+      </Center>
+      
     </>
   )
 }

@@ -86,7 +86,7 @@ export const SignUpPage = (): ReactElement => {
         )}
       </Formik>
       <Button
-      fontFamily='LINESeedKR-Bd'
+        fontFamily='LINESeedKR-Bd'
         colorScheme='gray'
         width='100%'
         onClick={goPrevPage}
