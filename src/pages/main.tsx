@@ -41,8 +41,9 @@ export const MainPage = (): ReactElement => {
           fontFamily='LINESeedKR-Bd'
           width='100%'
           size='lg'
+          onClick={()=>{navigate("/post")}}
         >
-          보러 가기
+          지금 시작하기
         </Button>
       </Card>
       <Flex alignItems='center' mb='1rem' >
