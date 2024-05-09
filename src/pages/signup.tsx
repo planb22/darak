@@ -6,9 +6,13 @@ import axios from 'axios';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import { Heading, Text, Button, Image, Center, Input, InputGroup, InputRightElement, IconButton } from "@chakra-ui/react";
 import { useToast } from '@chakra-ui/react';
 
+import { Heading, Text, Button, Image, 
+  Center, Checkbox, Link, Icon,
+  Input, InputGroup, InputRightElement, IconButton } from "@chakra-ui/react";
+
+import { LuExternalLink } from "react-icons/lu";
 import { BiSolidShow, BiSolidHide } from 'react-icons/bi';
 
 type Inputs = {
@@ -22,6 +26,8 @@ export const SignUpPage = (): ReactElement => {
   const [wheel, setWheel] = useState(false);
   const toast = useToast();
 
+  const [checkedTos, setCheckedTos] = useState(false);
+
   const { handleSubmit, register, formState: { isValid } } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setWheel(true);
@@ -32,13 +38,7 @@ export const SignUpPage = (): ReactElement => {
     }).then((result) => {
       console.log(result);
       setWheel(false);
-      toast({
-        title: '회원가입에 성공했어요!',
-        description: "유후!",
-        status: 'success',
-        duration: 2000,
-        isClosable: true,
-      });
+      
     }).catch((error) => {
       console.error(error);
       setWheel(false);
@@ -77,12 +77,16 @@ export const SignUpPage = (): ReactElement => {
         <Input
           size='lg'
           type='string'
-          placeholder='닉네임'
+          placeholder='별명'
           variant='filled'
           mb='10px'
-          {...register("nickname", {required: true, minLength: 4, maxLength: 10})}
+          {...register("nickname", {required: true, minLength: 4, maxLength: 7, pattern: {
+            value: /^[ㄱ-ㅣ가-힣]{4,7}$/,
+            message: "형식이 올바르지 않습니다."
+          }})}
         />
-        <li>닉네임은 중복될 수 없어요. 4자 이상 10자 이하로 지정해 주세요.</li>
+        <li><Text fontFamily='LINESeedKR-Bd'>별명은 다른 회원님에게도 보여요.</Text></li>
+        <Text>쉽게 읽을 수 있도록 한글로 4자 이상 7자 이하로 지정해 주세요.</Text>
         <Input
           mt='1rem'
           size='lg'
@@ -90,7 +94,10 @@ export const SignUpPage = (): ReactElement => {
           placeholder='이메일'
           variant='filled'
           mb='10px'
-          {...register("username", {required: true, minLength: 6})}
+          {...register("username", {required: true, pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: "이메일 주소가 올바르지 않습니다."
+          }})}
         />
         <InputGroup size='lg' mb='0.5rem'>
           <Input
@@ -99,7 +106,7 @@ export const SignUpPage = (): ReactElement => {
             type={show ? 'text' : 'password'}
             variant='filled'
             placeholder='비밀번호'
-            {...register("password", {required: true, minLength: 6})}
+            {...register("password", {required: true, minLength: 10})}
           />
           <InputRightElement width='4.5rem'>
             <IconButton
@@ -111,6 +118,13 @@ export const SignUpPage = (): ReactElement => {
           </InputRightElement>
         </InputGroup>
         <li>10자 이상으로 지정해 주세요.</li>
+        <Checkbox 
+          colorScheme="teal"
+          mt='1.5rem'
+          isChecked={checkedTos} 
+          onChange={(e) => setCheckedTos(e.target.checked)}
+        >
+          [필수] <Link href={import.meta.env.VITE_TOS_URL} textDecoration='underline' isExternal>다락 이용약관</Link><Icon as={LuExternalLink} />에 동의합니다.</Checkbox>
         <Center>
           <Button
             fontFamily='LINESeedKR-Bd'
@@ -119,7 +133,7 @@ export const SignUpPage = (): ReactElement => {
             mb='1rem'
             colorScheme='teal'
             type='submit'
-            isDisabled={!isValid}
+            isDisabled={!isValid || !checkedTos}
             isLoading={wheel}
           >
             가입하기
