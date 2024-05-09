@@ -19,6 +19,7 @@ import { BiSolidShow, BiSolidHide } from 'react-icons/bi';
 import { FcGoogle } from "react-icons/fc";
 
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 type Inputs = {
   username: string,
@@ -35,6 +36,8 @@ export const LoginPage = (): ReactElement => {
 
   const { handleSubmit, register, formState: { isValid } } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
+  const navigate = useNavigate();
 
   const firebaseConfig = {
     apiKey: import.meta.env.VITE_API_KEY,
@@ -87,6 +90,10 @@ export const LoginPage = (): ReactElement => {
       console.error(error);
     });
   }
+
+  const goToSignUp = () => {
+    navigate("/signup");
+  };
   
   return (
     <>
@@ -108,13 +115,7 @@ export const LoginPage = (): ReactElement => {
           placeholder='이메일'
           variant='filled'
           mb='10px'
-          {...register("username", {
-            required: true,
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "이메일 주소가 올바르지 않습니다."
-            }
-          })}
+          {...register("username", {required: true, minLength: 6})}
         />
         <InputGroup size='lg' mb='30px'>
           <Input
@@ -123,7 +124,7 @@ export const LoginPage = (): ReactElement => {
             type={show ? 'text' : 'password'}
             variant='filled'
             placeholder='비밀번호'
-            {...register("password", {required: true})}
+            {...register("password", {required: true, minLength: 6})}
           />
           <InputRightElement width='4.5rem'>
             <IconButton
@@ -149,7 +150,7 @@ export const LoginPage = (): ReactElement => {
       </form>
       <Flex mb='30px'>
         <Spacer />
-        <Button colorScheme="blue" variant='link'>
+        <Button colorScheme="blue" variant='link' onClick={goToSignUp}>
           회원가입
         </Button>
         <Text mx='10px'>·</Text>
