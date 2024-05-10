@@ -27,7 +27,7 @@ export const PostPage = (): ReactElement => {
   const toast = useToast();
   const navigate = useNavigate();
 
-  const { handleSubmit, register, formState: { isValid } } = useForm<confirmInputs>();
+  const { handleSubmit, register, formState: { isValid }, setValue } = useForm<confirmInputs>();
   const onSubmit: SubmitHandler<confirmInputs> = async (data) => {
     setWheel(true);
     await axios.get("http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=" + import.meta.env.VITE_BOOK_API_KEY + "&Query=" + data.isbn + "&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101", {
@@ -118,6 +118,7 @@ export const PostPage = (): ReactElement => {
             <Input
               size='lg'
               type='tel'
+              id='isbnInput'
               isDisabled={wheel}
               placeholder='ISBN 입력'
               variant='filled'
@@ -147,9 +148,9 @@ export const PostPage = (): ReactElement => {
             mt='1rem'
             width='100%'
             variant='outlined'
-            onClick={levelUp}
+            onClick={()=>{setValue("isbn", "9788925588650");}}
           >
-            건너뛰기 (샘플 데이터)
+            체험해 보세요
           </Button>
         </>
       ) : null}
